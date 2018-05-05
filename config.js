@@ -54,15 +54,15 @@ const config = {
    
         $default: {
             mortgages: {
-                type: process.env.AUTHORIZATION_SVC_TYPE || 'tcp',
-                host: process.env.AUTHORIZATION_SVC_HOST,
-                port: process.env.AUTHORIZATION_SVC_PORT || 8083,
+                type: process.env.MORTGAGES_SVC_TYPE || 'tcp',
+                host: process.env.MORTGAGES_SVC_HOST,
+                port: process.env.MORTGAGES_SVC_PORT || 8083,
                 pin: 'role:mortgage'
             },
             creditcards: {
-                type: process.env.AUTHENTICATION_SVC_TYPE || 'tcp',
-                host: process.env.AUTHENTICATION_SVC_HOST,
-                port: process.env.AUTHENTICATION_SVC_PORT || 3012,
+                type: process.env.CREDITCARDS_SVC_TYPE || 'tcp',
+                host: process.env.CREDITCARDS_SVC_HOST,
+                port: process.env.CREDITCARDS_SVC_PORT || 3012,
                 pin: 'role:creditcards'
             },
             audit: {

@@ -5,8 +5,6 @@ const Composer = require('./index');
 const Config = require('./config').get('/');
 
 
-RetryCaching(true)
-    .start();
 
 Composer((err, server) => {
 

@@ -42,11 +42,6 @@ exports.register = function(server, options, next) {
 
     }
 
-    const proxyMap = {
-        '/user': externalUri('/users', 'authorization')
-    };
-
-
 
     server.route({
         method: 'GET',
@@ -57,36 +52,6 @@ exports.register = function(server, options, next) {
         }
     });
 
-    const proxyHandler = {
-        proxy: {
-            mapUri: (req, cb) => {
-                console.log('proxyHandler.mapUri uri value', req);
-
-                try {
-
-                    const uri = proxyMap[req.path];
-
-                    if (!uri) {
-                        return cb(Boom.notFound());
-                    }
-
-                    cb(null, uri, req.headers);
-
-                } catch (err) {
-                    console.log(err);
-                }
-
-
-            },
-            onResponse: (err, res, req, reply, settings, ttl) => {
-
-                if (err) {
-                    return reply(err);
-                }
-                reply(res);
-            }
-        }
-    };
 
     server.route({
         method: 'GET',
@@ -109,7 +74,7 @@ exports.register = function(server, options, next) {
                             'userId': server.app.decodedToken.userId
                         };
 
-                        var extUri = externalUri('/mvp/mortgages/' + request.params.year, 'mortgages');
+                        var extUri = externalUri('/mortgages/' + request.params.year, 'mortgages');
 
                         console.log('mapUri hit with', extUri)
 
@@ -118,8 +83,8 @@ exports.register = function(server, options, next) {
                         }
 
                         console.log('processing proxy before redirecting', {
-                            url: convertPaths('/mvp-dev/mortgages/{date}'),
-                            path: '/mvp/mortgages/{date}'
+                            url: convertPaths('/mortgages/{date}'),
+                            path: '/mortgages/{date}'
                         });
 
                         callback(null, 'http://' + extUri, proxyHeaders);
