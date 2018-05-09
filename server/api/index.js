@@ -71,7 +71,7 @@ exports.register = function(server, options, next) {
                     passThrough: true,
                     mapUri: function (request, callback) {
 
-                        var extUri = externalUri('/mortgage/' + request.params.customerId, 'mortgages');
+                        var extUri = externalUri('api/mortgage/get?id=' + request.params.customerId, 'mortgages');
 
                         console.log('mapUri hit with', extUri)
 
@@ -80,8 +80,8 @@ exports.register = function(server, options, next) {
                         }
 
                         console.log('processing proxy before redirecting', {
-                            url: convertPaths('/mortgage/{customerId}'),
-                            path: '/mortgage/{customerId}'
+                            url: convertPaths('api/mortgage/get?id={customerId}'),
+                            path: 'api/mortgage/get?id={customerId}'
                         });
 
                         callback(null, 'http://' + extUri);
