@@ -156,6 +156,57 @@ exports.register = function(server, options, next) {
         }
     })
 
+    server.route({
+        method: 'GET',
+        path: convertPaths('/Customer/{customerId}'),
+        config: {
+            tags: ['api'],
+            description: "Gets the customer information for the customer id",
+            validate: {
+                params: {
+                    customerId: Joi.string()
+                }
+            },
+            handler: function (request, reply) {
+
+                return reply.proxy({
+                    passThrough: true,
+                    mapUri: function (request, callback) {
+
+                        var extUri = externalUri('/api/customer/get?id=' + request.params.customerId, 'customer');
+
+                        console.log('mapUri hit with', extUri)
+
+                        if (!request.path) {
+                            return cb(Boom.notFound());
+                        }
+
+                        console.log('processing proxy before redirecting', {
+                            url: 'api/customer/get?id={customerId}',
+                            path: 'api/customer/get?id={customerId}'
+                        });
+
+                        callback(null, 'http://' + extUri);
+                    },
+                    onResponse: function (err, res, request, reply, settings, ttl) {
+
+                        console.log('receiving the response from the upstream.');
+
+                        if (err) {
+                            console.log('response:' + err)
+
+                            return reply(err);
+                        }
+
+                        return reply(res).headers = res.headers;
+
+                    }
+                })
+
+            }
+        }
+    })
+
     function replyWithJSON(err, res, request, reply, settings, ttl) {
         Wreck.read(res, { json: true }, function(err, payload) {
             reply(payload);
