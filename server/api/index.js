@@ -62,7 +62,7 @@ exports.register = function(server, options, next) {
             description: "Gets most recent mortgage account balance for user",
             validate: {
                 params: {
-                    customerId: Joi.string
+                    customerId: Joi.string()
                 }
             },
             handler: function (request, reply) {
@@ -71,7 +71,7 @@ exports.register = function(server, options, next) {
                     passThrough: true,
                     mapUri: function (request, callback) {
 
-                        var extUri = externalUri('/mortgage/' + request.params.customerId, 'mortgage');
+                        var extUri = externalUri('/mortgage/' + request.params.customerId, 'mortgages');
 
                         console.log('mapUri hit with', extUri)
 
@@ -84,7 +84,7 @@ exports.register = function(server, options, next) {
                             path: '/mortgage/{customerId}'
                         });
 
-                        callback(null, 'http://' + extUri, proxyHeaders);
+                        callback(null, 'http://' + extUri);
                     },
                     onResponse: function (err, res, request, reply, settings, ttl) {
 
@@ -113,7 +113,7 @@ exports.register = function(server, options, next) {
             description: "Gets the credit card balance for the custoer id",
             validate: {
                 params: {
-                    customerId: Joi.string
+                    customerId: Joi.string()
                 }
             },
             handler: function (request, reply) {
@@ -122,7 +122,7 @@ exports.register = function(server, options, next) {
                     passThrough: true,
                     mapUri: function (request, callback) {
 
-                        var extUri = externalUri('/api/creditcard/get?id=' + request.params.customerId, 'creditcard');
+                        var extUri = externalUri('/api/creditcard/get?id=' + request.params.customerId, 'creditcards');
 
                         console.log('mapUri hit with', extUri)
 
@@ -131,11 +131,11 @@ exports.register = function(server, options, next) {
                         }
 
                         console.log('processing proxy before redirecting', {
-                            url: convertPaths('api/creditcard/get?id={customerId}'),
+                            url: 'api/creditcard/get?id={customerId}',
                             path: 'api/creditcard/get?id={customerId}'
                         });
 
-                        callback(null, 'http://' + extUri, proxyHeaders);
+                        callback(null, 'http://' + extUri);
                     },
                     onResponse: function (err, res, request, reply, settings, ttl) {
 
