@@ -89,25 +89,7 @@ const manifest = {
                                 module: "good-console"
                             },
                             "stdout"
-                        ],
-                        HTTPReporter: [{
-                            module: 'good-squeeze',
-                            name: 'Squeeze',
-                            args: [{
-                                log: "*",
-                                response: "*",
-                                ops: "*",
-                                request: "*",
-                                error: "*"
-                            }]
-                        }, {
-                            module: 'good-http',
-                            args: [process.env.LOG_API, {
-                                wreck: {
-                                    headers: { 'x-api-key': 12345 }
-                                }
-                            }]
-                        }]
+                        ]
 
 
                     }
