@@ -53,15 +53,16 @@ exports.register = function(server, options, next) {
     });
 
 
+    
     server.route({
         method: 'GET',
-        path: convertPaths('/mortgages/{date}'),
+        path: convertPaths('/mortgages/{customerId}'),
         config: {
             tags: ['api'],
-            description: "Gets mortgage account balance  for user",
+            description: "Gets most recent mortgage account balance for user",
             validate: {
                 params: {
-                    year: Joi.number().required()
+                    customerId: Joi.string
                 }
             },
             handler: function (request, reply) {
@@ -69,12 +70,8 @@ exports.register = function(server, options, next) {
                 return reply.proxy({
                     passThrough: true,
                     mapUri: function (request, callback) {
-                        
-                        const proxyHeaders = {
-                            'userId': server.app.decodedToken.userId
-                        };
 
-                        var extUri = externalUri('/mortgages/' + request.params.year, 'mortgages');
+                        var extUri = externalUri('/mortgage/' + request.params.customerId, 'mortgage');
 
                         console.log('mapUri hit with', extUri)
 
@@ -83,8 +80,59 @@ exports.register = function(server, options, next) {
                         }
 
                         console.log('processing proxy before redirecting', {
-                            url: convertPaths('/mortgages/{date}'),
-                            path: '/mortgages/{date}'
+                            url: convertPaths('/mortgage/{customerId}'),
+                            path: '/mortgage/{customerId}'
+                        });
+
+                        callback(null, 'http://' + extUri, proxyHeaders);
+                    },
+                    onResponse: function (err, res, request, reply, settings, ttl) {
+
+                        console.log('receiving the response from the upstream.');
+
+                        if (err) {
+                            console.log('response:' + err)
+                            
+                            return reply(err);
+                        }
+
+                        return reply(res).headers = res.headers;
+
+                    }
+                })
+
+            }
+        }
+    })
+
+    server.route({
+        method: 'GET',
+        path: convertPaths('/creditcard/{customerId}'),
+        config: {
+            tags: ['api'],
+            description: "Gets the credit card balance for the custoer id",
+            validate: {
+                params: {
+                    customerId: Joi.string
+                }
+            },
+            handler: function (request, reply) {
+
+                return reply.proxy({
+                    passThrough: true,
+                    mapUri: function (request, callback) {
+
+                        var extUri = externalUri('/api/creditcard/get?id=' + request.params.customerId, 'creditcard');
+
+                        console.log('mapUri hit with', extUri)
+
+                        if (!request.path) {
+                            return cb(Boom.notFound());
+                        }
+
+                        console.log('processing proxy before redirecting', {
+                            url: convertPaths('api/creditcard/get?id={customerId}'),
+                            path: 'api/creditcard/get?id={customerId}'
                         });
 
                         callback(null, 'http://' + extUri, proxyHeaders);

@@ -55,7 +55,6 @@ function badRequest (message, data){
  
     server.start((error) => {
         
-        console.log('Database connection @' + process.env.MONGODB_URI);
 
         if (error) {
             throw error;

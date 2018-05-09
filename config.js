@@ -13,7 +13,7 @@ const criteria = {
 
 
 const config = {
-    $meta: 'This is the api gateway for the motix application',
+    $meta: 'This is the api gateway for the society hack',
     projectName: 'gateway',
     port: {
         api: {
@@ -44,7 +44,7 @@ const config = {
     microservices: {
         $filter: 'env',
         test: {
-            authorization: {
+            mortgages: {
                 type: process.env.AUTHORIZATION_SVC_TYPE || 'tcp',
                 host: process.env.AUTHORIZATION_SVC_HOST || "mvp-microservice-security.f7cf5f3b.svc.dockerapp.io",
                 port: process.env.AUTHORIZATION_SVC_PORT || 8083,
