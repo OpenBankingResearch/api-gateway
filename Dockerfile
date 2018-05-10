@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 
 RUN npm install
 

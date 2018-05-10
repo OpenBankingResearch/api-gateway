@@ -11,7 +11,7 @@ const criteria = {
 
 
 const manifest = {
-    $meta: 'This file defines the candidate services.',
+    $meta: 'This file defines the gateway config',
     server: {
         debug: {
             request: ['error']
@@ -57,7 +57,7 @@ const manifest = {
                 'register': 'hapi-swagger',
                 'options': {
                     info: {
-                        'title': 'Motix API Documentation',
+                        'title': 'SocietyHack API Documentation',
                         'version': Pack.version,
                     },
                     securityDefinitions: {
