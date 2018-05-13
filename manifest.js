@@ -57,7 +57,7 @@ const manifest = {
                 'register': 'hapi-swagger',
                 'options': {
                     info: {
-                        'title': 'SocietyHack API Documentation',
+                        'title': 'Society Data Caching API Documentation',
                         'version': Pack.version,
                     },
                     securityDefinitions: {

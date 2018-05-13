@@ -33,7 +33,7 @@ const config = {
     urlPrefix: {
         $filter: 'env',
         test: 'mvp-test',
-        $default: 'mvp-dev'
+        $default: 'api'
     },
 
     jwtSecret: {
