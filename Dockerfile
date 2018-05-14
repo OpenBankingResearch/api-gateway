@@ -1,5 +1,5 @@
 
-FROM node:8.1
+FROM node:8-alpine
 
 RUN mkdir -p /usr/src/app
 
