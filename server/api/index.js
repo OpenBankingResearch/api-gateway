@@ -138,7 +138,7 @@ exports.register = function(server, options, next) {
                     },
                     onResponse: function (err, res, request, reply, settings, ttl) {
 
-                        console.log('recieving the response from the upstream.',);
+                        console.log('recieving the response from the upstream.');
 
                         if (err) {
                             console.log('response:' + err)
@@ -172,7 +172,7 @@ exports.register = function(server, options, next) {
                     passThrough: true,
                     mapUri: function (request, callback) {
 
-                        var extUri = externalUri('/api/customer/get?id=' + request.params.customerId, 'customer');
+                        var extUri = externalUri('/api/customer/get?id=' + request.params.customerId, 'customers');
 
                         console.log('mapUri hit with', extUri)
 

@@ -70,6 +70,12 @@ const config = {
                 host: process.env.AUDIT_SVC_HOST,
                 port: process.env.AUDIT_SVC_PORT || 3010,
                 pin: 'role:audit'
+            },
+            customers: {
+                type: process.env.CUSTOMERS_SVC_TYPE || 'tcp',
+                host: process.env.CUSTOMERS_SVC_HOST,
+                port: process.env.CUSTOMERS_SVC_PORT || 8085,
+                pin: 'role:customers'
             }
         }
     }
